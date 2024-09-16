@@ -24,3 +24,5 @@ runs:
     - ${{ inputs.chart-path }}
     - ${{ inputs.github-token }}
     - ${{ inputs.helm-repo }}
+    - ${{ inputs.helm-repo-folder }}
+    - ${{ inputs.branch-name }}
