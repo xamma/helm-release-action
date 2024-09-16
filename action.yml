@@ -1,0 +1,19 @@
+name: 'Helm Chart Release'
+description: 'Packages Helm charts and uploads them to a Helm repo'
+inputs:
+  chart-path:
+    description: 'Path to the Helm chart'
+    required: true
+  github-token:
+    description: 'GitHub token for authentication'
+    required: true
+  helm-repo:
+    description: 'GitHub repository (e.g., user/repo) for Helm charts'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.chart-path }}
+    - ${{ inputs.github-token }}
+    - ${{ inputs.helm-repo }}
