@@ -4,6 +4,7 @@ RUN apk add --no-cache \
     curl \
     git \
     bash \
+    openssl \
     && curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash \
     && rm -rf /var/cache/apk/*
 
