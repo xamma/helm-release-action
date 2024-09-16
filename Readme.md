@@ -44,3 +44,26 @@ jobs:
           helm-repo-folder: 'docs'  # whats the name of the folder in your helm-charts repo
           branch-name: 'master' # name of the branch in your helm-charts repo
 ```
+
+## Workflow
+```mermaid
+%%{ init : { "theme" : "neutral" } }%%
+graph TD;
+    A[helm-chart-app1]
+    C[helm-chart-app2]
+    D[App1]
+    B[docs/]
+    E[charts/]
+    F[GIthub Actions CI/CD]
+
+    subgraph **helm-charts**
+        B -->|contains| A
+        B -->|contains| C
+    end
+
+    subgraph **app repo**
+        D -->|helm manifests| E
+        F -->|Push helm package| B
+        F -->|Create package| E
+    end
+```
