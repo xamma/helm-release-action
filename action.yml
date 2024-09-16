@@ -10,6 +10,13 @@ inputs:
   helm-repo:
     description: 'GitHub repository (e.g., user/repo) for Helm charts'
     required: true
+  helm-repo-folder:
+    description: 'In which folder in the helm-repo to put the release'
+    required: true
+  branch-name:
+    description: 'Name of the branch to deploy to'
+    required: true
+    default: master
 runs:
   using: 'docker'
   image: 'Dockerfile'

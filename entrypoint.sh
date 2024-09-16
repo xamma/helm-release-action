@@ -9,12 +9,15 @@ if ! command -v helm &> /dev/null; then
 fi
 
 # Get inputs from workflow args
-CHART_PATH="$1"      # Path to the chart directory where this workflow runs
-GITHUB_TOKEN="$2"    # PAT
-HELM_REPO="$3"       # user/name format
+CHART_PATH="$1"        # Path to the chart directory where this workflow runs
+GITHUB_TOKEN="$2"      # PAT
+HELM_REPO="$3"         # user/name format
+HELM_REPO_FOLDER="$4"  # in which folder to put the release
+BRANCH_NAME="$5"       # Branch name of Hlem repo e.g. main, master
 
 echo "Chart Path: $CHART_PATH"
 echo "Helm Repo: $HELM_REPO"
+echo "Helm Repo Folder: $HELM_REPO_FOLDER"
 
 # Build chart URL
 CHART_URL="https://$HELM_REPO.git"
@@ -38,16 +41,13 @@ echo "Checking out Helm charts repo: $HELM_REPO"
 git clone "https://$GITHUB_TOKEN@github.com/$HELM_REPO.git" helm-charts
 cd helm-charts
 
-# Create docs dir (dunno if needed)
-mkdir -p docs
-
 # Move the packagege to the right folder in the helm-chart repo
-echo "Moving the packaged chart to docs directory"
-mv "../charts/$PACKAGE_NAME" docs/
+echo "Moving the packaged chart to $HELM_REPO_FOLDER"
+mv "../charts/$PACKAGE_NAME" $HELM_REPO_FOLDER
 
 # Helm repo index
 echo "Updating Helm repo index..."
-helm repo index docs/ --url "$CHART_URL"
+helm repo index $HELM_REPO_FOLDER --url "$CHART_URL"
 
 # Commit and push changes
 git config --local user.email "action@github.com"
@@ -63,7 +63,7 @@ fi
 # Using PAT for the remote push
 git remote set-url origin "https://$GITHUB_TOKEN@github.com/$HELM_REPO.git"
 
-if git push origin master; then
+if git push origin $BRANCH_NAME; then
     echo "Successfully pushed to the Helm repository."
 else
     echo "Failed to push to the Helm repository. Exiting."
