@@ -47,7 +47,7 @@ mv "../charts/$PACKAGE_NAME" $HELM_REPO_FOLDER
 
 # Helm repo index
 echo "Updating Helm repo index..."
-helm repo index $HELM_REPO_FOLDER --url "$CHART_URL"
+helm repo index $HELM_REPO_FOLDER
 
 # Commit and push changes
 git config --local user.email "action@github.com"
