@@ -36,7 +36,7 @@ jobs:
 
       # Step 2: Use Custom Helm Chart Release Action
       - name: Create Helm Chart Release
-        uses: xamma/helm-release-action@v1.0.4
+        uses: xamma/helm-release-action@v1.0.5
         with:
           chart-path: './charts/my-chart'  # relative Path to your chart directory where your helmfiles are
           github-token: ${{ secrets.MY_PAT }}  # GitHub PAT token for authentication
